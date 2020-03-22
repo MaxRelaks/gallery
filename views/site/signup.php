@@ -8,6 +8,7 @@ use \kartik\date;
 
 <?php
    $form = ActiveForm::begin(['class'=>'form-horizontal']);
+
 ?>
 
 <?= $form->field($model, 'firstname')->textInput(['autofocus'=>true]) ?>
@@ -18,7 +19,13 @@ use \kartik\date;
 
 <?= $form->field($model, 'city')->textInput(['autofocus'=>true]) ?>
 
-<?= $form->field($model, 'date')->widget(\kartik\date\DatePicker::className(),[]) ?>
+<?= $form->field($model, 'date')->widget(\kartik\date\DatePicker::className(),['name' => 'check_issue_date',
+    'value' => date('d-M-Y', strtotime('+2 days')),
+    'options' => ['placeholder' => 'Виберіть Вашу дату народження ...'],
+    'pluginOptions' => [
+        'format' => 'dd-M-yyyy',
+        'todayHighlight' => true
+    ]]) ?>
 
 <?= $form->field($model, 'password')->passwordInput() ?>
 
