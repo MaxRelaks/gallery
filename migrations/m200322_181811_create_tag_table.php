@@ -14,6 +14,7 @@ class m200322_181811_create_tag_table extends Migration
     {
         $this->createTable('{{%tag}}', [
             'id' => $this->primaryKey(),
+            'title'=>$this->string()
         ]);
     }
 
