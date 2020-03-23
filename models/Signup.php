@@ -2,15 +2,10 @@
 
 namespace app\models;
 
-use Yii;
 use yii\base\Model;
-use yii\helpers\Url;
-use yii\helpers\Html;
 
 class Signup extends Model
 {
-    const ACTIVE_USER = 1; // Потверждённый E-mail
-
     public $firstname;
     public $surename;
     public $email;
@@ -18,8 +13,6 @@ class Signup extends Model
     public $confpassword;
     public $city;
     public $date;
-    public $code;
-    public $active;
 
     public function rules()
     {
@@ -36,6 +29,7 @@ class Signup extends Model
         ];
     }
 
+<<<<<<< HEAD
     public function sendConfirmationLink(){
         $confirmationLinkUrl = Url::to(['auction/site/confirmemail', 'email'=>$this->email, 'code'=>$this->code],'https');
 
@@ -73,6 +67,8 @@ class Signup extends Model
         return $sendingResult;
     }
 
+=======
+>>>>>>> parent of c73ca91... add send mail done
     public function signup()
     {
         $user = new User();
@@ -82,8 +78,6 @@ class Signup extends Model
         $user->surename = $this->surename;
         $user->city = $this->city;
         $user->date = $this->date;
-        $user->code = $this->code;
-        $user->active = 0;
         return $user->save(); //вернет true или false
     }
 

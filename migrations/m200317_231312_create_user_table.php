@@ -19,11 +19,7 @@ class m200317_231312_create_user_table extends Migration
             'city'=>$this->string(100),
             'date'=>$this->string(100),
             'email'=>$this->string(100),
-            'password'=>$this->string(255),
-            'isAdmin'=>$this->integer()->defaultValue(0),
-            'photo'=>$this->string()->defaultValue(null),
-            'code'=>$this->string(),
-            'active'=>$this->integer()
+            'password'=>$this->string(255)
         ]);
     }
 
