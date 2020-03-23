@@ -2,45 +2,74 @@
 
 namespace app\models;
 
-use yii\db\ActiveRecord;
-use yii\web\IdentityInterface;
+use Yii;
 
-class User extends ActiveRecord implements IdentityInterface
+/**
+ * This is the model class for table "user".
+ *
+ * @property int $id
+ * @property string|null $firstname
+ * @property string|null $surename
+ * @property string|null $city
+ * @property string|null $date
+ * @property string|null $email
+ * @property string|null $password
+ * @property int|null $isAdmin
+ * @property string|null $photo
+ * @property string|null $code
+ * @property int|null $active
+ *
+ * @property Comment[] $comments
+ */
+class User extends \yii\db\ActiveRecord
 {
-
-    public function setPassword($password)
+    /**
+     * {@inheritdoc}
+     */
+    public static function tableName()
     {
-        $this->password = sha1($password);
+        return 'user';
     }
 
-    public function validatePassword($password)
+    /**
+     * {@inheritdoc}
+     */
+    public function rules()
     {
-        return $this->password === sha1($password);
+        return [
+            [['isAdmin', 'active'], 'integer'],
+            [['firstname', 'surename', 'city', 'date', 'email'], 'string', 'max' => 100],
+            [['password', 'photo', 'code'], 'string', 'max' => 255],
+        ];
     }
 
-    //=============================================
-    public static function findIdentity($id)
+    /**
+     * {@inheritdoc}
+     */
+    public function attributeLabels()
     {
-        return self::findOne($id);
+        return [
+            'id' => 'ID',
+            'firstname' => 'Firstname',
+            'surename' => 'Surename',
+            'city' => 'City',
+            'date' => 'Date',
+            'email' => 'Email',
+            'password' => 'Password',
+            'isAdmin' => 'Is Admin',
+            'photo' => 'Photo',
+            'code' => 'Code',
+            'active' => 'Active',
+        ];
     }
 
-    public function getId()
+    /**
+     * Gets query for [[Comments]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getComments()
     {
-        return $this->id;
-    }
-
-    public static function findIdentityByAccessToken($token, $type = null)
-    {
-
-    }
-
-    public function getAuthKey()
-    {
-
-    }
-
-    public function validateAuthKey($authKey)
-    {
-
+        return $this->hasMany(Comment::className(), ['user_id' => 'id']);
     }
 }
