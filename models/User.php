@@ -2,75 +2,46 @@
 
 namespace app\models;
 
-use Yii;
+use yii\db\ActiveRecord;
+use yii\web\IdentityInterface;
 
-/**
- * This is the model class for table "user".
- *
- * @property int $id
- * @property string|null $firstname
- * @property string|null $surename
- * @property string|null $city
- * @property string|null $date
- * @property string|null $email
- * @property string|null $password
- * @property int|null $isAdmin
- * @property string|null $photo
- * @property string|null $code
- * @property int|null $active
- *
- * @property Comment[] $comments
- */
-class User extends \yii\db\ActiveRecord
+class User extends ActiveRecord implements IdentityInterface
 {
-    /**
-     * {@inheritdoc}
-     */
-    public static function tableName()
+
+    public function setPassword($password)
     {
-        return 'user';
+        $this->password = sha1($password);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function rules()
+    public function validatePassword($password)
     {
-        return [
-            [['isAdmin', 'active'], 'integer'],
-            [['firstname', 'surename', 'city', 'date', 'email'], 'string', 'max' => 100],
-            [['password', 'photo', 'code'], 'string', 'max' => 255],
-        ];
+        return $this->password === sha1($password);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function attributeLabels()
+    //=============================================
+    public static function findIdentity($id)
     {
-        return [
-            'id' => 'ID',
-            'firstname' => 'Firstname',
-            'surename' => 'Surename',
-            'city' => 'City',
-            'date' => 'Date',
-            'email' => 'Email',
-            'password' => 'Password',
-            'isAdmin' => 'Is Admin',
-            'photo' => 'Photo',
-            'code' => 'Code',
-            'active' => 'Active',
-        ];
+        return self::findOne($id);
     }
 
-    /**
-     * Gets query for [[Comments]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getComments()
+    public function getId()
     {
-        return $this->hasMany(Comment::className(), ['user_id' => 'id']);
+        return $this->id;
+    }
+
+    public static function findIdentityByAccessToken($token, $type = null)
+    {
+
+    }
+
+    public function getAuthKey()
+    {
+
+    }
+
+    public function validateAuthKey($authKey)
+    {
+
     }
     public function setPassword($password)
     {
