@@ -25,7 +25,6 @@ use \kartik\date;
     'options' => ['placeholder' => 'Оберіть Вашу дату народження ...'],
     'pluginOptions' => [
         'format' => 'dd-M-yyyy',
-        'language' => 'ru-RU',
         'todayHighlight' => true
     ]]) ?>
 
